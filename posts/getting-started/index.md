@@ -9,7 +9,7 @@ Let's go over a few quick things:
 
 - This template was built with `@sveltejs/kit@1.0.0`
 
-- The theme of this blog is heavily borrowed from Tailwind's ["Spotlight" blog template](https://spotlight.tailwindui.com/). This is _not_ a port of that template, but the styling is pretty much the same.
+- The theme of this blog is heavily borrowed from Tailwind's ["Spotlight" blog template](https://spotlight.tailwindui.com/). This is _not_ a port of that template, but the styling is pretty much the same. 
 
 - You should edit the `src/lib/info.js` file to contain your information. This will properly update the parts of the website that display your name, social links, and SEO (meta tags) for your posts.
 
