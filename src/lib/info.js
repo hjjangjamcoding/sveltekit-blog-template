@@ -19,7 +19,7 @@ Hello, I’m ${firstName}, a software engineer based in Canada.
 // Your social usernames, empty strings won't be used.
 // For sake of the live demo, I'm using `username/repo` for github,
 // but you can replace with just your username.
-export const github = 'jakelee'
+export const github = 'aronleeel'
 export const twitter = ''
 export const linkedin = ''
 export const instagram = ''
