@@ -7,6 +7,7 @@ export async function load() {
   //     console.log(rows);
   //     return rows;
   // })
+  // console.log(posts);
   return {
     posts: posts.slice(0, 5),
     // users: results

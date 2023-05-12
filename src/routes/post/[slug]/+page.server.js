@@ -6,7 +6,7 @@ export async function load({ params }) {
   const { slug } = params
 
   // get post with metadata
-  const post = posts.find((post) => slug === post.slug)
+  const post = posts.find((post) => parseInt(slug) === post.slug)
 
   if (!post) {
     throw error(404, 'Post not found')

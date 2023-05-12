@@ -6,15 +6,22 @@
  */
 export async function load({ data }) {
   // load the markdown file based on slug
-  const component = data.post.isIndexFile
-    ? // vite requires relative paths and explicit file extensions for dynamic imports
-      // see https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
-      await import(`../../../../posts/${data.post.slug}/index.md`)
-    : await import(`../../../../posts/${data.post.slug}.md`)
-
+  const component = {
+    html: data.post.html.innerHTML.replace(/^\s+|\s+$/g, ''),
+    render: () => {
+      return { html: component.html, css: { code: '', map: null }, head: '' }
+    },
+    $$render: () => {
+      return component.html
+    }
+  }
+  const c = await import('/workspaces/sveltekit-blog-template/posts/lorem-ipsum.md');
+  // console.log(c.$$render());
+  console.log(component.$$render())
+  // console.log(component)
   return {
     post: data.post,
-    component: component.default,
+    component: c.default,
     layout: {
       fullWidth: true
     }
