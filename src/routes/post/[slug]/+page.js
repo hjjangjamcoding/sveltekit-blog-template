@@ -4,24 +4,21 @@
  *
  * @type {import('@sveltejs/kit').PageLoad}
  */
+
 export async function load({ data }) {
-  // load the markdown file based on slug
+  const html = data.post.html
   const component = {
-    html: data.post.html.innerHTML.replace(/^\s+|\s+$/g, ''),
+    // html: ,
     render: () => {
-      return { html: component.html, css: { code: '', map: null }, head: '' }
+      return { html:html, css: { code: '', map: null }, head: '' }
     },
     $$render: () => {
-      return component.html
+      return html
     }
   }
-  const c = await import('/workspaces/sveltekit-blog-template/posts/lorem-ipsum.md');
-  // console.log(c.$$render());
-  console.log(component.$$render())
-  // console.log(component)
   return {
     post: data.post,
-    component: c.default,
+    component,
     layout: {
       fullWidth: true
     }

@@ -1,6 +1,6 @@
 <script>
   import { website, name, bio, avatar } from '$lib/info.js'
-  import ToC from '$lib/components/ToC.svelte'
+  // import ToC from '$lib/components/ToC.svelte'
   import ArrowLeftIcon from '$lib/components/ArrowLeftIcon.svelte'
   import SocialLinks from '$lib/components/SocialLinks.svelte'
   import { afterNavigate } from '$app/navigation'
@@ -14,7 +14,6 @@
   const ogImage = `https://og-image.vercel.app/**${encodeURIComponent(
     data.post.title
   )}**?theme=light&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fhyper-color-logo.svg`
-
   const url = `${website}/${data.post.slug}`
 
   // if we came from /posts, we will use history to go back to preserve
@@ -113,11 +112,11 @@
   </div>
 
   <!-- table of contents -->
-  <div class="hidden xl:block pt-10">
+  <!-- <div class="hidden xl:block pt-10">
     <aside class="sticky hidden w-48 ml-8 xl:block top-8" aria-label="Table of Contents">
       <ToC post={data.post} />
     </aside>
-  </div>
+  </div> -->
 </div>
 
 <style lang="postcss">

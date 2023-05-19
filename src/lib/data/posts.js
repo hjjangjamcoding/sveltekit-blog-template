@@ -44,7 +44,7 @@ export const posts = await mysqlconn.query("SELECT * FROM posts")
       return {
         title: post.title,
         date: toStringDate(post.created_at),
-        html,
+        html: html.innerHTML,
         slug: post.id,
         isIndexFile: post.id === 1,
         preview: {
@@ -59,7 +59,7 @@ export const posts = await mysqlconn.query("SELECT * FROM posts")
       .map((post, index, allPosts) => ({
         ...post,
         next: allPosts[index - 1],
-        previous: allPosts[index + 1]
+        previous: allPosts[index + 1],
       }))
   })
 // console.log(posts);
