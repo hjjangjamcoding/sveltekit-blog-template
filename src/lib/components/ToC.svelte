@@ -4,8 +4,6 @@
   import Card from './Card.svelte'
 
   export let post
-  console.log(post)
-
   let elements = []
   let headings = post.headings
 

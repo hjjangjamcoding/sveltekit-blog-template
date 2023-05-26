@@ -6,19 +6,17 @@
  */
 
 export async function load({ data }) {
-  const html = data.post.html
-  const component = {
-    // html: ,
-    render: () => {
-      return { html:html, css: { code: '', map: null }, head: '' }
-    },
-    $$render: () => {
-      return html
-    }
-  }
+  // const component = {
+  //   // html: ,
+  //   render: () => {
+  //     return { html, css: { code: '', map: null }, head: '' }
+  //   },
+  //   $$render: () => {
+  //     return html
+  //   }
+  // }
   return {
     post: data.post,
-    component,
     layout: {
       fullWidth: true
     }

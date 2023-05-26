@@ -84,7 +84,7 @@
 
       <!-- render the post -->
       <div class="prose dark:prose-invert ">
-        <svelte:component this={data.component} />
+        {@html data.post.html}
       </div>
     </article>
 
