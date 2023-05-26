@@ -49,6 +49,7 @@
         <MoonIcon class="hidden text-zinc-500 dark:block" />
         <SunIcon class="block text-zinc-400 dark:hidden" />
       </button>
+      <a href="/add_post" class="!text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-teal-600 dark:to-teal-400">add post</a>
     </header>
     <main
       class="flex flex-col flex-grow w-full mx-auto"

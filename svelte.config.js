@@ -5,6 +5,7 @@ import adapter from '@sveltejs/adapter-auto'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+  important: true,
   extensions: ['.svelte', ...mdsvexConfig.extensions],
 
   // Consult https://github.com/sveltejs/svelte-preprocess
