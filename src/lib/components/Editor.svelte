@@ -10,15 +10,21 @@
   export let contentValue: string
   export let markup: string
 
+  let redColor = '#ff0000'
+
   let updateTexareaValue: any, useKeyCombinations: any
   onMount(() => {
     updateTexareaValue = (text: string) => {
       const { selectionEnd, selectionStart } = contentTextArea
-      contentValue = `${contentValue.slice(0, selectionEnd)}${text}${contentValue.slice(
-        selectionEnd
-      )}`
+      // contentValue = `${contentValue.slice(0, selectionEnd)}${text}${contentValue.slice(
+      //   selectionEnd
+      // )}`
+      const val = text.replace('$', contentValue.slice(selectionStart, selectionEnd))
+      contentValue = `${contentValue.slice(0, selectionStart)}${val}${contentValue.slice(selectionEnd)}`
       contentTextArea.focus({ preventScroll: false })
-      setCaretPosition(contentTextArea, selectionStart, selectionStart + text.length / 2)
+      const cursor = text.indexOf('$') + selectionStart
+      console.log(`cursor: ${cursor}`)
+      setCaretPosition(contentTextArea, selectionStart, cursor + selectionStart)
     }
 
     useKeyCombinations = (event: Event) => {
@@ -31,59 +37,62 @@
           (keysPressed['Control'] || keysPressed['Meta'] || keysPressed['Shift']) &&
           keyEvent.key == 'b'
         ) {
-          updateTexareaValue(`****`)
+          updateTexareaValue(`**$**`)
         } else if (
           (keysPressed['Control'] || keysPressed['Meta'] || keysPressed['Shift']) &&
           keyEvent.key == 'i'
         ) {
-          updateTexareaValue(`**`)
+          updateTexareaValue(`*$*`)
         } else if (
           (keysPressed['Control'] || keysPressed['Meta'] || keysPressed['Shift']) &&
           keyEvent.key === 'k'
         ) {
-          updateTexareaValue(`[text](link)`)
+          updateTexareaValue(`[$text](link)`)
           setCaretPosition(
             contentTextArea,
             getCaretPosition(contentTextArea).start,
             getCaretPosition(contentTextArea).start + `[text](link)`.length / 2
           )
         }
+        contentTextArea.classList.add('height', 'auto')
       })
-
       event.target?.addEventListener('keyup', (e) => {
+        let size = contentValue.split('\n').length - 1
+        contentTextArea.style.height = `${size*24 + 56}px`
+        console.log(`${contentTextArea.style.height}: ${contentTextArea.scrollHeight}`)
         delete keysPressed[(e as KeyboardEvent).key]
       })
     }
   })
   const addBoldCommand = () => {
-    updateTexareaValue(`****`)
+    updateTexareaValue(`**$**`)
   }
   const addItalicCommand = () => {
-    updateTexareaValue(`**`)
+    updateTexareaValue(`*$*`)
   }
   const addLinkCommand = () => {
-    updateTexareaValue(`[text](link)`)
+    updateTexareaValue(`[$text](link)`)
   }
   const addUnorderedListCommand = () => {
-    updateTexareaValue(`\n- First item\n- Second item\n`)
+    updateTexareaValue(`\n- $First item\n- Second item\n`)
   }
   const addOrderedListCommand = () => {
-    updateTexareaValue(`\n1. First item\n2. Second item\n`)
+    updateTexareaValue(`\n1. $First item\n2. Second item\n`)
   }
   const addHeadingOneCommand = () => {
-    updateTexareaValue(`\n# Your heading one {#id-name .class-name}\n\n`)
+    updateTexareaValue(`\n# $Your heading one {#id-name .class-name}\n\n`)
   }
   const addHeadingTwoCommand = () => {
-    updateTexareaValue(`\n## Your heading one {#id-name .class-name}\n\n`)
+    updateTexareaValue(`\n## $Your heading one {#id-name .class-name}\n\n`)
   }
   const addHeadingThreeCommand = () => {
-    updateTexareaValue(`\n### Your heading one {#id-name .class-name}\n\n`)
+    updateTexareaValue(`\n### $Your heading one {#id-name .class-name}\n\n`)
   }
   const addImageCommand = () => {
-    updateTexareaValue(`![alt text](url)`)
+    updateTexareaValue(`![$alt text](url)`)
   }
   const addCodeBlockCommand = () => {
-    updateTexareaValue('\n```language\n<code here>\n```')
+    updateTexareaValue('\n```$language\n<code here>\n```')
   }
   const addNoteCommand = () => {
     updateTexareaValue(
@@ -113,7 +122,7 @@
         'To preview, ensure your content is at least 19 characters.'
 
       $notification = {
-        message: `To preview, ensure your content is at least 19 characters ${sadEmoji}...`,
+        message: `To preview, ensure your content is at least 19 characters...`,
         backgroundColor: `${redColor}`
       }
     }
@@ -201,38 +210,37 @@
     }
   }}
   name="content"
-  class="w-full"
+  class="w-full h-auto overflow-hidden bg-neutral-900 border border-neutral-600 rounded-md focus:outline-none focus:border-neutral-500 p-4 resize-none"
   id="textAreaContent"
   placeholder="Write your article content here (markdown supported)..."
   data-input-field
   required
 />
 
-
 <style>
-    .tooltiptext {
-        visibility: hidden;
-        min-width: 120px;
-        font-size: var(--fontSize-8);
-        background: 0 0;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px;
-        position: absolute;
-        z-index: 1;
-        bottom: 110%;
-        left: 50%;
-        margin-left: -60px;
-        opacity: 0;
-        transition: all .3s;
-    }
-    .dropdown-content {
+  .tooltiptext {
+    visibility: hidden;
+    min-width: 120px;
+    font-size: var(--fontSize-8);
+    background: 0 0;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 110%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+  .dropdown-content {
     display: none;
     position: absolute;
     background: var(--bg-prussian-blue);
     min-width: max-content;
     box-shadow: 0 8px 16px #0003;
     z-index: 1;
-}
+  }
 </style>
