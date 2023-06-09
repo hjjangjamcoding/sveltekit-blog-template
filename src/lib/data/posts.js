@@ -36,7 +36,7 @@ marked.setOptions(
   }
 )
 // Get all posts and add metadata
-export const posts = await mysqlconn.query("SELECT * FROM posts")
+export const posts = await mysqlconn.query("SELECT * FROM posts ORDER BY created_at DESC")
   .then(([rows, fields]) => {
     return rows.map(post => {
       const html = parse(marked(post.body))

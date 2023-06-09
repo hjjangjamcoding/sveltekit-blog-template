@@ -5,7 +5,7 @@
   import SocialLinks from '$lib/components/SocialLinks.svelte'
   import { afterNavigate } from '$app/navigation'
   import PostDate from '$lib/components/PostDate.svelte'
-
+  import Preview from '$lib/components/Preview.svelte'
   /** @type {import('./$types').PageData} */
   export let data
 
@@ -84,7 +84,7 @@
 
       <!-- render the post -->
       <div class="prose dark:prose-invert ">
-        {@html data.post.html}
+        <Preview markup={data.post.html} isEdit={false}/>
       </div>
     </article>
 

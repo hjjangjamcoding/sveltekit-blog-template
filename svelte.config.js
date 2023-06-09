@@ -19,7 +19,9 @@ const config = {
 
   kit: {
     adapter: adapter(),
-
+    csrf: {
+      checkOrigin: false,
+    },
     // remove this if you don't want prerendering
     prerender: {
       entries: ['*', '/sitemap.xml', '/rss.xml']

@@ -4,27 +4,49 @@
   import type { EditorContent } from '$lib/types/article.interface'
   //   import { redColor, sadEmoji } from '$lib/utils/contents'
   import { getCaretPosition, parseMarkdown, setCaretPosition } from '$lib/utils/editor.utils'
-  import { onMount } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
+  import { marked } from 'marked'
 
   let contentTextArea: HTMLTextAreaElement
+
   export let contentValue: string
   export let markup: string
 
   let redColor = '#ff0000'
-
+  let loop: number
   let updateTexareaValue: any, useKeyCombinations: any
+  marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    headerIds: false,
+    tables: true,
+    breaks: true,
+    pedantic: false,
+    sanitize: true,
+    smartLists: true,
+    smartypants: false
+  })
+
   onMount(() => {
+    loop = setInterval(() => {
+      let size = contentValue.split('\n').length - 1
+      contentTextArea.style.height = `${size * 24 + 56}px`
+    }, 10)
+
     updateTexareaValue = (text: string) => {
       const { selectionEnd, selectionStart } = contentTextArea
       // contentValue = `${contentValue.slice(0, selectionEnd)}${text}${contentValue.slice(
       //   selectionEnd
       // )}`
       const val = text.replace('$', contentValue.slice(selectionStart, selectionEnd))
-      contentValue = `${contentValue.slice(0, selectionStart)}${val}${contentValue.slice(selectionEnd)}`
+      contentValue = `${contentValue.slice(0, selectionStart)}${val}${contentValue.slice(
+        selectionEnd
+      )}`
       contentTextArea.focus({ preventScroll: false })
-      const cursor = text.indexOf('$') + selectionStart
+      // setCaretPosition(contentTextArea, selectionStart, cursor + selectionStart)
+      const cursor = Number(text.indexOf('$') + selectionStart)
       console.log(`cursor: ${cursor}`)
-      setCaretPosition(contentTextArea, selectionStart, cursor + selectionStart)
+      contentTextArea.setSelectionRange(cursor, cursor)
     }
 
     useKeyCombinations = (event: Event) => {
@@ -48,22 +70,18 @@
           keyEvent.key === 'k'
         ) {
           updateTexareaValue(`[$text](link)`)
-          setCaretPosition(
-            contentTextArea,
-            getCaretPosition(contentTextArea).start,
-            getCaretPosition(contentTextArea).start + `[text](link)`.length / 2
-          )
         }
         contentTextArea.classList.add('height', 'auto')
       })
       event.target?.addEventListener('keyup', (e) => {
-        let size = contentValue.split('\n').length - 1
-        contentTextArea.style.height = `${size*24 + 56}px`
-        console.log(`${contentTextArea.style.height}: ${contentTextArea.scrollHeight}`)
         delete keysPressed[(e as KeyboardEvent).key]
       })
     }
   })
+  onDestroy(() => {
+    clearInterval(loop)
+  })
+
   const addBoldCommand = () => {
     updateTexareaValue(`**$**`)
   }
@@ -114,7 +132,7 @@
       content: contentValue
     }
 
-    markup = parseMarkdown(bodyEditor.content)
+    markup = marked(bodyEditor.content)
     if (markup.length >= 20) {
       $showPreview = !$showPreview
     } else {
@@ -210,7 +228,7 @@
     }
   }}
   name="content"
-  class="w-full h-auto overflow-hidden bg-neutral-900 border border-neutral-600 rounded-md focus:outline-none focus:border-neutral-500 p-4 resize-none"
+  class="w-full h-auto overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-600 rounded-md focus:outline-none focus:border-neutral-400 p-4 resize-none"
   id="textAreaContent"
   placeholder="Write your article content here (markdown supported)..."
   data-input-field
