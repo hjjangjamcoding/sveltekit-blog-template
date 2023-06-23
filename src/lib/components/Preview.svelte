@@ -21,7 +21,7 @@
 
 <section class="section feature" aria-label="feature">
   <div class="container">
-    <div class="prose">
+    <div>
       <div class="" bind:this={articleContainer}>
         <p>{@html markup}</p>
       </div>

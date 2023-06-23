@@ -35,8 +35,8 @@ marked.setOptions(
     smartypants: false
   }
 )
-// Get all posts and add metadata
-export const posts = await mysqlconn.query("SELECT * FROM posts ORDER BY created_at DESC")
+export const getPost = async () => {
+  return mysqlconn.query("SELECT * FROM posts ORDER BY created_at DESC")
   .then(([rows, fields]) => {
     return rows.map(post => {
       const html = parse(marked(post.body))
@@ -62,6 +62,8 @@ export const posts = await mysqlconn.query("SELECT * FROM posts ORDER BY created
         previous: allPosts[index + 1],
       }))
   })
+}
+// Get all posts and add metadata
 // console.log(posts);
 
 // export const posts = Object.entries(import.meta.glob('/posts/**/*.md', { eager: true }))
