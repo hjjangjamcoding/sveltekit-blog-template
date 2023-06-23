@@ -40,19 +40,3 @@
     </div>
   </div>
 </section>
-
-<style>
-  .preview.full-text {
-    grid-template-columns: 0.2fr 3.8fr;
-  }
-
-  .side-text i {
-    cursor: pointer;
-  }
-  @media (min-width: 992px) {
-    .preview.full-text .side-text {
-      background: #011627;
-      position: fixed;
-    }
-  }
-</style>

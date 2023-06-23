@@ -2,7 +2,7 @@
 // It is OK to delete this file if you don't want an RSS feed.
 // credit: https://scottspence.com/posts/make-an-rss-feed-with-sveltekit#add-posts-for-the-rss-feed
 
-import { posts } from '$lib/data/posts'
+import { getPost } from '$lib/data/posts'
 import { name, website } from '$lib/info'
 
 export const prerender = true
@@ -10,6 +10,7 @@ export const prerender = true
 // update this to something more appropriate for your website
 const websiteDescription = `${name}'s blog`
 const postsUrl = `${website}/posts`
+const posts = await getPost()
 
 /**
  * @type {import('@sveltejs/kit').RequestHandler}

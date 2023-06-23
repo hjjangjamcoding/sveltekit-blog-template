@@ -41,7 +41,9 @@
 
     <div class="card-wrapper">
       {#if $showPreview}
-        <Preview {markup} />
+        <div class="prose dark:prose-invert ">
+        <Preview markup={markup}/>
+      </div>
       {:else}
         <form class="form" method="POST" action="/send_post" datatype="application/json">
           {#if errors}
@@ -84,20 +86,3 @@
     </div>
   </div>
 </section>
-
-<style>
-  .btn {
-    margin-top: 1rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .input-wrapper {
-    display: flex;
-    gap: 0;
-    align-items: center;
-    justify-content: center;
-  }
-  .input-wrapper input {
-    width: 3rem;
-  }
-</style>

@@ -7,7 +7,7 @@ export const actions = {
         const data = await request.formData();
         const title = data.get('title')
         const content = data.get('content')
-        mysqlconn.query("INSERT INTO posts(title, body, user_id) VALUES (?, ?, ?)", [title, content, 1], (err, rows) => {
+        await mysqlconn.query("INSERT INTO posts(title, body, user_id) VALUES (?, ?, ?)", [title, content, 1], (err, rows) => {
             if(err) console.err(err);
         })
         throw redirect(302, "/")

@@ -2,11 +2,11 @@
 // It's helpful for SEO but does require you to keep it updated to reflect the routes of your website.
 // It is OK to delete this file if you'd rather not bother with it.
 
-import { posts } from '$lib/data/posts'
+import { getPost } from '$lib/data/posts'
 import { website } from '$lib/info'
 
 export const prerender = true
-
+const posts = await getPost()
 // make sure this matches your post route
 const getPostUrl = (slug) => `${website}/post/${slug}`
 
