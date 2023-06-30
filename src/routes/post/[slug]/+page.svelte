@@ -30,6 +30,9 @@
       history.back()
     }
   }
+  function deletePost(num) {
+    // document.
+  }
 </script>
 
 <svelte:head>
@@ -87,10 +90,16 @@
         <Preview markup={data.post.html} isEdit={false}/>
       </div>
     </article>
-
+    
     <!-- bio -->
     <hr />
     <div class="py-8">
+      <a 
+      class="items-center justify-center hidden p-5 h-10 w-fit mb-8 transition bg-white rounded-md shadow-md -top-1 -left-16 lg:flex group shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0 dark:focus-visible:ring-2 dark:ring-white/10 dark:hover:border-zinc-700 dark:hover:ring-white/20"
+      href="/delete_post/{data.post.slug}"
+      >
+       Delete Post
+    </a>
       <div class="grid gap-8">
         <div class="flex justify-center order-1 col-span-2 gap-6 md:order-2">
           <SocialLinks />
